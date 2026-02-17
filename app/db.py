@@ -8,8 +8,9 @@ DATABASE_URL = os.getenv("DATABASE_URL","")
 
 engine = create_engine(DATABASE_URL, pool_pre_ping=True)
 
+"""
 def init_db():
-    query = text("""
+    query = text(
                  CREATE TABLE IF NOT EXISTS transactions(
                     id SERIAL PRIMARY KEY,
                      USER_ID TEXT NOT NULL,
@@ -17,8 +18,9 @@ def init_db():
                     TYPE TEXT NOT NULL   
                  )
                 
-                 """)
+                 )
     with engine.begin() as conn:
         result = conn.execute(query)
     return result
 init_db()
+"""
