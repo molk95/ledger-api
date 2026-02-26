@@ -22,8 +22,13 @@ docker run -d --name ledger-postgres \
   -e POSTGRES_PASSWORD=ledgerpass \
   -e POSTGRES_DB=ledgerdb \
   -p 5432:5432 \
-  postgres:16
+  pgvector/pgvector:pg16
 ```
+And add:
+```bash
+CREATE EXTENSION IF NOT EXISTS vector;
+```
+
 Add a `.env`:
 ```bash
 DATABASE_URL=postgresql+psycopg2://ledger:ledgerpass@localhost:5432/ledgerdb
@@ -39,9 +44,18 @@ alembic upgrade head
 ```
 ### 4. Start the API
 ```bash
-uvicorn main:app --reload
+uvicorn app.main:app --reload
 ```
-If your entry point is `app/main.py`, use: `uvicorn app.main:app --reload`
+
+## AI Module (V1 - Semantic Search Foundation)
+
+The project includes a foundation for AI-powered semantic search.
+
+- Embeddings generated via local model (Ollama) with OpenAI-compatible interface.
+- Stored in PostgreSQL using pgvector extension
+- Cosine similarity search using SQL operator `<=>`
+
+
 
 ## Example Endpoints
 `POST /transactions`
